@@ -7,23 +7,25 @@ const Input = ({
   border,
   height,
   children,
+  type,
+  name,
+  value,
   id,
   keyup,
   keypress,
+  onChange,
 }) => {
   const styles = {
     width,
     color,
     border,
     height,
+    type,
+    name,
+    value,
   };
   return (
-    <StInput
-      {...styles}
-      onKeyUp={keyup}
-      onKeyPress={keypress}
-      id={id}
-    >
+    <StInput {...styles} onChange={onChange} onKeyUp={keyup} onKeyPress={keypress} id={id}>
       {children}
     </StInput>
   );
@@ -34,6 +36,10 @@ Input.defaultProps = {
   height: "68px",
   color: "black",
   border: "1px solid #D6D6D6",
+  type: "",
+  name: "",
+  value: "",
+  onchange:(e)=>{},
   keyup: (e) => {},
   keypress: (e) => {},
 };

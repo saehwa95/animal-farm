@@ -35,8 +35,8 @@ LgPrimaryBtn.defaultProps = {
   radius: "5px",
   onclick: () => {},
   border: "none",
-  width: "420px",
-  height: "68px",
+  width: "300px",
+  height: "55px",
 };
 
 const StLgPrimaryBtn = styled.button`
@@ -46,7 +46,6 @@ const StLgPrimaryBtn = styled.button`
   border: ${({ border }) => border};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  font-size : 24px;
   padding : 0px;
   cursor: pointer;
 `;
