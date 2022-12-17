@@ -33,6 +33,7 @@ SmSecondaryBtn.defaultProps = {
   onclick: () => {},
   padding: "8px 32px",
   border: "1px solid #cfcfcf",
+  height: "55px"
 };
 const StSmSeconBtn = styled.button`
   background-color: ${({ bgColor }) => bgColor};
