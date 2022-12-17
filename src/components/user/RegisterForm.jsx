@@ -101,4 +101,5 @@ const StInput = styled.input`
   border-radius: 5px;
   border: 1px solid #cecece;
   margin: 10px 10px 10px 0;
+  
 `;
