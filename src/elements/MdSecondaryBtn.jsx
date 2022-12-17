@@ -33,8 +33,8 @@ MdSecondaryBtn.defaultProps = {
   color: "#000",
   radius: "5px",
   onclick: () => {},
-  width: "180px",
-  height: "46px",
+  width: "150px",
+  height: "55px",
   border: "1px solid #cfcfcf",
 };
 const StMdSciBtn = styled.button`

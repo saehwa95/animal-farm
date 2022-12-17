@@ -33,8 +33,8 @@ LgSecondaryBtn.defaultProps = {
   radius: "5px",
   onclick: () => {},
   border: "1px solid #000",
-  width: "420px",
-  height: "68px",
+  width: "300px",
+  height: "55px",
 };
 
 const StLgSecondaryBtn = styled.button`
@@ -45,7 +45,6 @@ const StLgSecondaryBtn = styled.button`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   padding: 0px;
-  font-size : 24px;
   cursor: pointer;
 `;
 

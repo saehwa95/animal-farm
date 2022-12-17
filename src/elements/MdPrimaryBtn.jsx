@@ -33,8 +33,8 @@ MdPrimaryBtn.defaultProps = {
   color: "#fff",
   radius: "5px",
   onclick: () => {},
-  width: "180px",
-  height: "46px",
+  width: "150px",
+  height: "55px",
   border: "none",
 };
 const StMdSeconBtn = styled.button`
