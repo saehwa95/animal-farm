@@ -5,12 +5,8 @@ const Input = ({
   width,
   color,
   border,
-  name,
-  type,
-  value,
   height,
   children,
-  change,
   id,
   keyup,
   keypress,
@@ -19,15 +15,11 @@ const Input = ({
     width,
     color,
     border,
-    name,
-    type,
-    value,
     height,
   };
   return (
     <StInput
       {...styles}
-      onChange={change}
       onKeyUp={keyup}
       onKeyPress={keypress}
       id={id}
@@ -42,10 +34,6 @@ Input.defaultProps = {
   height: "68px",
   color: "black",
   border: "1px solid #D6D6D6",
-  type: "text",
-  name: "",
-  value: "",
-  change: (e) => {},
   keyup: (e) => {},
   keypress: (e) => {},
 };
@@ -56,9 +44,6 @@ const StInput = styled.input`
   color: ${({ color }) => color};
   border: ${({ border }) => border};
   border-radius: 5px;
-  type: ${({ type }) => type};
-  name: ${({ name }) => name};
-  value: ${({ value }) => value};
   padding: 0 5px;
   font-size : 24px;
   &:focus{
