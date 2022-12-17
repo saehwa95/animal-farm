@@ -22,6 +22,5 @@ const StHeaderDiv = styled.header`
   height: ${({ height }) => height};
   margin: ${({ margin }) => margin};
   justify-content: space-between;
-  cursor: pointer;
 `;
 export default StHeader;
