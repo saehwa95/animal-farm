@@ -42,7 +42,7 @@ Input.defaultProps = {
   height: "68px",
   color: "black",
   border: "1px solid #D6D6D6",
-  type: "text",
+  type: "",
   name: "",
   value: "",
   change: (e) => {},
@@ -56,12 +56,12 @@ const StInput = styled.input`
   color: ${({ color }) => color};
   border: ${({ border }) => border};
   border-radius: 5px;
-  type: ${({ type }) => type};
+  /* type: ${({ type }) => type};
   name: ${({ name }) => name};
-  value: ${({ value }) => value};
+  value: ${({ value }) => value}; */
   padding: 0 5px;
-  font-size : 24px;
-  &:focus{
+  font-size: 24px;
+  &:focus {
     outline: none;
   }
 `;
