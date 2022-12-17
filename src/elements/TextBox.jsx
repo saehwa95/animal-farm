@@ -25,8 +25,8 @@ TextBox.defaultProps = {
   bgColor: "#F5F5F5",
   color: "#000",
   onclick: () => {},
-  width: "1000px",
-  height: "300px",
+  width: "100px",
+  height: "100px",
   padding: "16px",
 };
 
