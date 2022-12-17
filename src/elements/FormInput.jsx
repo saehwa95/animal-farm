@@ -45,8 +45,8 @@ const StInput = styled.input`
   border: ${({ border }) => border};
   border-radius: 5px;
   padding: 0 5px;
-  font-size : 24px;
-  &:focus{
+  font-size: 24px;
+  &:focus {
     outline: none;
   }
 `;
