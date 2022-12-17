@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Wrapper from "../../elements/Wrapper";
+import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
+import LgSecondaryBtn from "../../elements/LgSecondaryBtn";
 
 const LoginForm = () => {
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
@@ -13,7 +15,7 @@ const LoginForm = () => {
     setLoginInput({ ...loginInput, [name]: value });
     console.log(value)
   };
-  
+
   return (
     <Wrapper>
       <form onSubmit={loginSubmitHandler}>
@@ -39,9 +41,9 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button>로그인</button>
+        <LgPrimaryBtn>로그인</LgPrimaryBtn>
       </form>
-      <button>회원가입</button>
+      <LgSecondaryBtn>회원가입</LgSecondaryBtn>
     </Wrapper>
   );
 };
