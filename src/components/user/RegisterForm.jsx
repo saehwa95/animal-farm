@@ -21,8 +21,6 @@ const RegisterForm = () => {
     setRegisterInput({ ...registerInput, [name]: value });
   };
 
-  const registerBtn = () => {};
-
   return (
     <Wrapper>
       <form onSubmit={registerSubmitHandler}>
@@ -36,7 +34,6 @@ const RegisterForm = () => {
                 name="email"
                 value={registerInput.email}
                 onChange={registerOnchangeInput}
-                required
               />
               <SmSecondaryBtn>중복확인</SmSecondaryBtn>
             </div>
@@ -52,7 +49,6 @@ const RegisterForm = () => {
                 name="nickName"
                 value={registerInput.nickName}
                 onChange={registerOnchangeInput}
-                required
               />
             </div>
           </label>
@@ -67,7 +63,6 @@ const RegisterForm = () => {
                 name="password"
                 value={registerInput.password}
                 onChange={registerOnchangeInput}
-                required
               />
             </div>
           </label>
@@ -82,12 +77,11 @@ const RegisterForm = () => {
                 name="confirmPassword"
                 value={registerInput.confirmPassword}
                 onChange={registerOnchangeInput}
-                required
               />
             </div>
           </label>
         </div>
-        <LgPrimaryBtn onClick={registerBtn}>회원가입 완료</LgPrimaryBtn>
+        <LgPrimaryBtn>회원가입 완료</LgPrimaryBtn>
       </form>
     </Wrapper>
   );
@@ -100,6 +94,5 @@ const StInput = styled.input`
   height: 55px;
   border-radius: 5px;
   border: 1px solid #cecece;
-  margin: 10px 10px 10px 0;
-  
+  margin: 10px 10px 20px 0;
 `;
