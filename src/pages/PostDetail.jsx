@@ -11,6 +11,7 @@ import InnerBox from '../elements/InnerBox'
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Carousel from '../elements/carousel/Carousel';
+import CustomCarousel from '../elements/custom/Carousel'
 
 const PostDetail = () => {
   const id = useParams();
@@ -19,7 +20,7 @@ const PostDetail = () => {
   return (
     <Wrapper>
       <PostContainer>
-        <Carousel/>
+        <CustomCarousel/>
         <TextBox width="590px" height="568px"/>
       </PostContainer>
       <InnerBox padding="40px 0" gap="1.3em" justifyContent="center" >
