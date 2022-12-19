@@ -18,7 +18,7 @@ const Router = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<PostCreate />} />
-          {/* <Route path="/detail/:id" element={<PostDetail />} /> */}
+          <Route path="/detail/:id" element={<PostDetail />} />
           {/* <Route path="/update/:id" element={<PostUpdate/> } /> */}
         </Routes>
       </Layout>

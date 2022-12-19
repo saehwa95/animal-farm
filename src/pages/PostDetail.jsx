@@ -1,7 +1,6 @@
 import React from 'react';
-import Wrapper from '../elements/Wrapper';
-import Nata from "../images/nata.jpeg"
 
+import Wrapper from '../elements/Wrapper';
 import styled from 'styled-components';
 
 import Comment from '../components/detail/Comment';
@@ -11,6 +10,8 @@ import MdSecondaryBtn from '../elements/MdSecondaryBtn';
 import InnerBox from '../elements/InnerBox'
 import { useNavigate, useParams } from 'react-router-dom';
 
+import Carousel from '../elements/carousel/Carousel';
+
 const PostDetail = () => {
   const id = useParams();
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const PostDetail = () => {
   return (
     <Wrapper>
       <PostContainer>
-        <ImageDiv src={Nata}/>
+        <Carousel/>
         <TextBox width="590px" height="568px"/>
       </PostContainer>
       <InnerBox padding="40px 0" gap="1.3em" justifyContent="center" >
@@ -39,12 +40,6 @@ const PostDetail = () => {
     </Wrapper>
   );
 };
-
-const ImageDiv = styled.img`
-  width : 590px;
-  height: 600px;
-`;
-
 const PostContainer = styled.div`
   width: 1200px;
   display: flex;
