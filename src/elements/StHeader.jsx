@@ -13,7 +13,6 @@ const StHeader = ({ width, display, padding, margin, children }) => {
 StHeader.defaultProps = {
   width: "1200px",
   display: "flex",
-  
   padding: "30px",
   margin: "0 auto",
 };
@@ -23,6 +22,7 @@ const StHeaderDiv = styled.header`
   height: ${({ height }) => height};
   margin: ${({ margin }) => margin};
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 `;
 export default StHeader;

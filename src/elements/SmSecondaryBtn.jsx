@@ -6,6 +6,7 @@ const SmSecondaryBtn = ({
   color,
   radius,
   children,
+  width,
   height,
   padding,
   border,
@@ -14,6 +15,7 @@ const SmSecondaryBtn = ({
     bgColor,
     color,
     radius,
+    width,
     height,
     children,
     padding,
@@ -31,7 +33,7 @@ SmSecondaryBtn.defaultProps = {
   color: "#000000",
   radius: "5px",
   onclick: () => {},
-  padding: "8px 32px",
+  width: "75px",
   border: "1px solid #cfcfcf",
   height: "55px"
 };

@@ -1,44 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 
-const TextBox = ({
-  bgColor,
-  color,
+const TextButton = ({
   children,
+  color,
   padding,
-  border,
   width,
   height,
+  fontSize
 }) => {
   const styles = {
-    bgColor,
     color,
     padding,
-    border,
     width,
     height,
+    fontSize
   };
-  return <StInputBox {...styles}>{children}</StInputBox>;
+  return <StTextButton {...styles}>{children}</StTextButton>;
 };
 // props 정리, props의 타입모듈.
-TextBox.defaultProps = {
-  bgColor: "#F5F5F5",
+TextButton.defaultProps = {
+  fontSize: "18px",
   color: "#000",
-  padding: "16px",
 };
 
-const StInputBox = styled.textarea`
-  background-color: ${({ bgColor }) => bgColor};
+const StTextButton = styled.button`
   color: ${({ color }) => color};
   padding: ${({ padding }) => padding};
-  border: ${({ border }) => border};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  font-size: 18px;
+  font-size: ${({ fontSize }) => fontSize};
+  background-color: transparent;
   border: none;
   border-radius: 5px;
   outline: none;
-  resize:none;
+  pointer: curser;
 `;
 
-export default TextBox;
+export default TextButton;
