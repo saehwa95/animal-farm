@@ -6,6 +6,8 @@ import TextBox from "../../elements/TextBox";
 import Wrapper from "../../elements/Wrapper";
 import MdPrimaryBtn from "../../elements/MdPrimaryBtn";
 import { __addPosts } from "../../redux/modules/postsSlice";
+import axios from "axios";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const Write = () => {
 
   const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
+  const [img, setImg] = useState([]);
 
   const inputHandler = (e) => {
     const value = e.target.value;
@@ -22,42 +25,52 @@ const Write = () => {
   const onChangeSelectImages = (e) => {
     const img = e.target.files;
     console.log(img);
-    // let imageUrlList = []; //현재 MYIMAGE 복사
 
-    // for (let i = 0; i < imageUrlList.length; i++) {
-    //   const imageUrl = URL.createObjectURL(imageUrlList[i]);
-    //   imageUrlList.push(imageUrl);
-    // }
+    let fileURLs = [];
 
-    // if (imageUrlList.length > 5) {
-    //   imageUrlList = imageUrlList.slice(0, 5);
-    // }
-    // console.log("In onChangeSelectImages",imageUrlList);
+    let file;
+    let filesLength = img.length > 5 ? 5 : img.length;
+
+    for (let i = 0; i < filesLength; i++) {
+      file = img[i];
+      console.log("이미지", img);
+
+      let reader = new FileReader();
+      reader.onload = () => {
+        console.log(reader.result);
+        fileURLs[i] = reader.result;
+        setImg([...fileURLs]);
+      };
+      reader.readAsDataURL(file);
+    }
     setImage([...img]);
-    // if (image === null || image.length !== 5) {
-    //   alert("이미지는 5장 넣어주세요");
-    //   return;
-    // }
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
+    console.log(image);
+    // console.log(image[0]);
+    // for(let val of image) {
+    //   console.log(val.name);
+    // }
     let formData = new FormData();
+
     formData.append("input", input.text);
-    formData.append("images", image);
 
-    console.log(formData);
-    console.log(formData.images);
-
-    for (let entries of formData.keys()) {
-      console.log("keys ", entries);
-    }
-    for (let entries of formData.values()) {
-      console.log("values ", entries);
+    for (let i = 0; i < image.length; i++) {
+      console.log("image", image[i]);
     }
 
-    dispatch(__addPosts({ formData: formData }));
+    for (let i = 0; i < image.length; i++) {
+      formData.append("files", image[i]);
+    }
+
+    axios.post("http://localhost:3001/posts", {
+      text: formData.get("input"),
+      files: formData.getAll("files"),
+    });
+    // dispatch(__addPosts({ formData: formData }));
   };
 
   //navigate("/");
@@ -72,10 +85,37 @@ const Write = () => {
               <Delete onClick={() => handleDeleteImage(id)} />
             </div>
           ))} */}
-          {image && <img src={image} alt="preview-img" />}
-          <label htmlFor="input-file" onChange={onChangeSelectImages}>
-            <input type="file" multiple accept="image/*" id="fileUpload" />
-          </label>
+          <ImgBox>
+            {console.log(image)}
+            {img.map((img, i) => (
+              <div key={i}>
+                <img
+                  src={img}
+                  width="200px"
+                  height="200px"
+                  object-fit="cover"
+                />
+              </div>
+            ))}
+            {/* {image && (
+              <img
+                src={image}
+                width="200px"
+                height="200px"
+                object-fit="cover"
+              />
+            )} */}
+          </ImgBox>
+          <ImgButton For="file" onChange={onChangeSelectImages}>
+            사진 첨부하기
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              id="fileUpload"
+              style={{ display: "none" }}
+            />
+          </ImgButton>
           <TextBox
             onChange={inputHandler}
             width="1000px"
@@ -93,9 +133,26 @@ const Write = () => {
 
 const Stform = styled.form`
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   width: 1200px;
+`;
+
+const ImgBox = styled.div`
+  width: 300px;
+  height: 150px;
+  object-fit: cover;
+  display: flex;
+  gap: 8px;
+
+  justify-content: flex-start;
+`;
+
+const ImgButton = styled.label`
+  border: 1px solid #cecece;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 1000px;
+  height: 30px;
+  margin-bottom: 20px;
 `;
 export default Write;
