@@ -6,6 +6,7 @@ const SmPrimaryBtn = ({
   color,
   radius,
   children,
+  width,
   height,
   padding,
   border,
@@ -14,6 +15,7 @@ const SmPrimaryBtn = ({
     bgColor,
     color,
     radius,
+    width,
     height,
     children,
     padding,
@@ -31,7 +33,7 @@ SmPrimaryBtn.defaultProps = {
   color: "#fff",
   radius: "5px",
   onclick: () => {},
-  padding: "8px 32px",
+  width: "75px",
   border: "1px solid #cfcfcf",
   height: "55px"
 };
