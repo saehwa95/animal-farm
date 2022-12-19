@@ -11,51 +11,53 @@ const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //text_input
-  const [input, setInput] = useState({ text: "" });
-
-  const inputHandler = (e) => {
-    const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
-  };
-
-  //img_input
+  const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
 
-  const onChangeSelectImages = (e) => {
-    e.preventDefault();
-    const img = e.target.files;
-    const imageURLList = [...image]; //현재 MYIMAGE 복사
-    for (let i = 0; i < imageURLList.length; i += 1) {
-      console.log(img);
-      const imageUrl = URL.createObjectURL(imageURLList[i]);
-      imageURLList.push(imageUrl);
-    }
-    if (imageURLList.length > 5) {
-      imageURLList = imageURLList.slice(0, 5);
-    }
-    setImage(imageURLList);
-
-    console.log("img", e.target.files);
-    if (image === null || image.length !== 5) {
-      alert("이미지는 5장 넣어주세요");
-      return setImage(img);
-    }
+  const inputHandler = (e) => {
+    const value = e.target.value;
+    setInput({ ...input, text: value });
   };
-  console.log("setimg", image);
 
-  const form = new FormData();
-  for (let i = 0; i < image.length; i++) {
-    console.log("imgi", image[i]);
-    console.log("imgi", input);
-    form.append("images", image[i]);
-    form.append("text", input);
-  }
+  const onChangeSelectImages = (e) => {
+    const img = e.target.files;
+    console.log(img);
+    // let imageUrlList = []; //현재 MYIMAGE 복사
 
-  console.log("form", form.images);
+    // for (let i = 0; i < imageUrlList.length; i++) {
+    //   const imageUrl = URL.createObjectURL(imageUrlList[i]);
+    //   imageUrlList.push(imageUrl);
+    // }
 
-  const onSubmitHandler = () => {
-    dispatch(__addPosts({ formData: form }));
+    // if (imageUrlList.length > 5) {
+    //   imageUrlList = imageUrlList.slice(0, 5);
+    // }
+    // console.log("In onChangeSelectImages",imageUrlList);
+    setImage([...img]);
+    // if (image === null || image.length !== 5) {
+    //   alert("이미지는 5장 넣어주세요");
+    //   return;
+    // }
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append("input", input.text);
+    formData.append("images", image);
+
+    console.log(formData);
+    console.log(formData.images);
+
+    for (let entries of formData.keys()) {
+      console.log("keys ", entries);
+    }
+    for (let entries of formData.values()) {
+      console.log("values ", entries);
+    }
+
+    dispatch(__addPosts({ formData: formData }));
   };
 
   //navigate("/");
