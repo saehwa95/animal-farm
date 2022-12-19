@@ -13,6 +13,8 @@ const initialState = {
       updatedAt: new Date(),
     },
   ],
+  isloading: false,
+  error: false,
 };
 
 //게시글 조회
@@ -32,13 +34,25 @@ export const __getPosts = createAsyncThunk(
 //게시글 저장
 export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
-  async (paylode, thunkAPI) => {
-    console.log("저장", paylode);
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    for (let entries of payload.formData.keys()) {
+      console.log("keys in slice ", entries);
+    }
+    for (let entries of payload.formData.values()) {
+      console.log("keys in slice ", entries);
+    }
+
+    // console.log("저장", payload);
     try {
-      const postdata = await axios.post();
-      return postdata.data;
+      // console.log("dddd");
+      //   const postdata = await axios.post();
+      //   return postdata.data;
+      // } catch (error) {
+      //   console.log(error);
+      //   return thunkAPI.rejectWithValue(error);
+      return 1;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
