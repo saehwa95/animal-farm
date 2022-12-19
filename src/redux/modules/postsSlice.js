@@ -1,29 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initalState = {
+const initialState = {
   posts: [
     {
-      text: "하이향하ㅓ아허앟",
-      img: [
-        ((imgfile1 =
-          "https://velog.velcdn.com/images/hiak/post/74844262-126d-4d24-b5e1-7e04d0c78bdb/image.png"),
-        (imgfile2 =
-          "https://velog.velcdn.com/images/hiak/post/74844262-126d-4d24-b5e1-7e04d0c78bdb/image.png"),
-        (imgfile3 =
-          "https://velog.velcdn.com/images/hiak/post/74844262-126d-4d24-b5e1-7e04d0c78bdb/image.png"),
-        (imgfile4 =
-          "https://velog.velcdn.com/images/hiak/post/74844262-126d-4d24-b5e1-7e04d0c78bdb/image.png"),
-        (imgfile5 =
-          "https://velog.velcdn.com/images/hiak/post/74844262-126d-4d24-b5e1-7e04d0c78bdb/image.png")),
-      ],
+      postId: 0,
+      userId: 0,
+      nickname: "",
+      imageUrl: ["", ""],
+      text: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
   ],
 };
 
 //게시글 조회
 export const __getPosts = createAsyncThunk(
-  "GET_POST",
+  "GET_POSTS",
   async (paylode, thunkAPI) => {
     try {
       const getdata = await axios.get();
@@ -35,25 +29,105 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
+//게시글 저장
+export const __addPosts = createAsyncThunk(
+  "ADD_POSTS",
+  async (paylode, thunkAPI) => {
+    console.log("저장", paylode);
+    try {
+      const postdata = await axios.post();
+      return postdata.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//게시글 삭제
+export const __deletePosts = createAsyncThunk(
+  "DELETE_POSTS",
+  async (paylode, thunkAPI) => {
+    try {
+      const deletedata = await axios.delete();
+      return deletedata.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//게시글 수정
+export const __UpdatePosts = createAsyncThunk(
+  "UPDATE_POSTS",
+  async (paylode, thunkAPI) => {
+    try {
+      const updatedata = await axios.put();
+      return updatedata.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 //리듀서
 export const postsSlice = createSlice({
   name: "posts",
-  initalState,
+  initialState,
   reducers: {},
   extraReducers: {
-    [__getTodos.pending]: (state) => {
+    //get
+    [__getPosts.pending]: (state) => {
       state.isLoading = true;
     },
-    [__getTodos.fulfilled]: (state, action) => {
-      state.todolist = action.payload;
+    [__getPosts.fulfilled]: (state, action) => {
+      state.posts = action.payload;
       state.isLoading = false;
     },
-    [__getTodos.rejected]: (state, action) => {
+    [__getPosts.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    //post
+    [__addPosts.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__addPosts.fulfilled]: (state, action) => {
+      state.posts = action.payload;
+      state.isLoading = false;
+    },
+    [__addPosts.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    //delete
+    [__deletePosts.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deletePosts.fulfilled]: (state, action) => {
+      state.posts = action.payload;
+      state.isLoading = false;
+    },
+    [__deletePosts.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    //update
+    [__UpdatePosts.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__UpdatePosts.fulfilled]: (state, action) => {
+      state.posts = action.payload;
+      state.isLoading = false;
+    },
+    [__UpdatePosts.rejected]: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     },
   },
 });
 
-export const { getdata } = postsSlice.actions;
+export const { getdata, postdata, deletedata, updatedata } = postsSlice.actions;
 export default postsSlice.reducer;
