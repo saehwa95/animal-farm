@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const LgPrimaryBtn = ({
   onClick,
+  disabled,
   bgColor,
   color,
   radius,
@@ -23,7 +24,7 @@ const LgPrimaryBtn = ({
     fontSize,
   };
   return (
-    <StLgPrimaryBtn {...styles} onClick={onClick}>
+    <StLgPrimaryBtn {...styles} onClick={onClick} disabled={disabled}>
       {children}
     </StLgPrimaryBtn>
   );
@@ -34,6 +35,7 @@ LgPrimaryBtn.defaultProps = {
   color: "#fff",
   radius: "5px",
   onclick: () => {},
+  disabled: {},
   border: "none",
   width: "300px",
   height: "55px",
@@ -48,6 +50,11 @@ const StLgPrimaryBtn = styled.button`
   height: ${({ height }) => height};
   padding : 0px;
   cursor: pointer;
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+    background-color: #808080;
+  }
 `;
 
 export default LgPrimaryBtn;

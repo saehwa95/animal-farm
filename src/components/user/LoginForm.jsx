@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Wrapper from "../../elements/Wrapper";
 import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
 import LgSecondaryBtn from "../../elements/LgSecondaryBtn";
-import { Link } from "react-router-dom";
+import useValidation from "../../hooks/useValidation";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+  const [email, emailCheck, setEmail] = useValidation("email");
+  const [password, passwordCheck, setPassword] = useValidation("password");
+
+  const navigate = useNavigate()
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
-  };
-
-  const loginOnchangeHandler = (e) => {
-    const { name, value } = e.target;
-    setLoginInput({ ...loginInput, [name]: value });
+    navigate("/")
   };
 
   return (
@@ -28,8 +28,8 @@ const LoginForm = () => {
                 type="email"
                 placeholder="이메일을 입력해주세요."
                 name="email"
-                value={loginInput.email}
-                onChange={loginOnchangeHandler}
+                value={email}
+                onChange={setEmail}
               />
             </div>
           </label>
@@ -42,13 +42,13 @@ const LoginForm = () => {
                 type="password"
                 placeholder="비밀번호는 4글자 이상으로 작성해주세요."
                 name="password"
-                value={loginInput.password}
-                onChange={loginOnchangeHandler}
+                value={password}
+                onChange={setPassword}
               />
             </div>
           </label>
         </div>
-        <LgPrimaryBtn>로그인</LgPrimaryBtn>
+        <LgPrimaryBtn disabled={!emailCheck || !passwordCheck}>로그인</LgPrimaryBtn>
       </form>
       <Link to={`/register`}>
         <LgSecondaryBtn>회원가입</LgSecondaryBtn>
