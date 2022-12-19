@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const instance = axios.create({
+  baseURL: "http://localhost:3001",
+  headers: { "X-Custom-Header": "foobar" },
+  timeout: 10000,
+});
 const initialState = {
   posts: [
     {
-      postId: 0,
-      userId: 0,
-      nickname: "",
-      imageUrl: ["", ""],
+      imageUrl: [],
       text: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
     },
   ],
   isloading: false,
@@ -35,24 +34,24 @@ export const __getPosts = createAsyncThunk(
 export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
   async (payload, thunkAPI) => {
-    console.log(payload);
-    for (let entries of payload.formData.keys()) {
-      console.log("keys in slice ", entries);
-    }
-    for (let entries of payload.formData.values()) {
-      console.log("keys in slice ", entries);
-    }
+    //console.log(payload);
+    // for (let entries of payload.formData.keys()) {
+    //   console.log("keys in slice ", entries);
+    // }
+    // for (let entries of payload.formData.values()) {
+    //   console.log("keys in slice ", entries);
+    // }
 
     // console.log("저장", payload);
     try {
-      // console.log("dddd");
-      //   const postdata = await axios.post();
-      //   return postdata.data;
-      // } catch (error) {
-      //   console.log(error);
-      //   return thunkAPI.rejectWithValue(error);
-      return 1;
+      //console.log("dddd");
+      const postdata = await instance.post(
+        "http://localhost:3001/posts",
+        payload.formData
+      );
+      return postdata.data;
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -61,7 +60,7 @@ export const __addPosts = createAsyncThunk(
 //게시글 삭제
 export const __deletePosts = createAsyncThunk(
   "DELETE_POSTS",
-  async (paylode, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
       const deletedata = await axios.delete();
       return deletedata.data;
@@ -75,7 +74,7 @@ export const __deletePosts = createAsyncThunk(
 //게시글 수정
 export const __UpdatePosts = createAsyncThunk(
   "UPDATE_POSTS",
-  async (paylode, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
       const updatedata = await axios.put();
       return updatedata.data;
