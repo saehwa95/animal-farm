@@ -5,16 +5,24 @@ import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
 import LgSecondaryBtn from "../../elements/LgSecondaryBtn";
 import useValidation from "../../hooks/useValidation";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { __postLogin } from "../../redux/modules/userSlice";
 
 const LoginForm = () => {
   const [email, emailCheck, setEmail] = useValidation("email");
   const [password, passwordCheck, setPassword] = useValidation("password");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
-    navigate("/")
+    const login = {
+      email,
+      password,
+    }
+    dispatch(__postLogin(login))
+    navigate("/");
   };
 
   return (
@@ -48,7 +56,9 @@ const LoginForm = () => {
             </div>
           </label>
         </div>
-        <LgPrimaryBtn disabled={!emailCheck || !passwordCheck}>로그인</LgPrimaryBtn>
+        <LgPrimaryBtn disabled={!emailCheck || !passwordCheck}>
+          로그인
+        </LgPrimaryBtn>
       </form>
       <Link to={`/register`}>
         <LgSecondaryBtn>회원가입</LgSecondaryBtn>

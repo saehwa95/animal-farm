@@ -24,7 +24,7 @@ const useValidation = (type) => {
             setIsValid(false);
           }
           return;
-        case "nickName":
+        case "nickname":
           if (nickRegExp.test(value) && value !== "") {
             setIsValid(true);
           } else {
