@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: "http://localhost:3000",
   timeout: 2500,
   header: {
-    "Authorization" : `Bearer {token}`
+    "Authorization" : localStorage.getItem("token")
   }
 });
 
