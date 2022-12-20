@@ -11,16 +11,17 @@ import axios from "axios";
 const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
   const [img, setImg] = useState([]);
 
+  //text input
   const inputHandler = (e) => {
     const value = e.target.value;
     setInput({ ...input, text: value });
   };
 
+  //이미지 리더
   const onChangeSelectImages = (e) => {
     const img = e.target.files;
     console.log(img);
@@ -45,26 +46,23 @@ const Write = () => {
     setImage([...img]);
   };
 
+  //등록하기
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
     console.log(image);
     // console.log(image[0]);
     // for(let val of image) {
     //   console.log(val.name);
     // }
     let formData = new FormData();
-
     formData.append("input", input.text);
 
     for (let i = 0; i < image.length; i++) {
       console.log("image", image[i]);
     }
-
     for (let i = 0; i < image.length; i++) {
       formData.append("files", image[i]);
     }
-
     axios.post("http://localhost:3001/posts", {
       text: formData.get("input"),
       files: formData.getAll("files"),
@@ -130,7 +128,7 @@ const ImgBox = styled.div`
 `;
 
 const ImgButton = styled.label`
-  border: 1px solid #cecece;
+  background-color: #fff;
   font-weight: bold;
   border-radius: 5px;
   width: 100%;
