@@ -77,9 +77,7 @@ const Button = styled.button`
 `;
 const SliderContainer = styled.div`
   position: relative;
-  width: 600px;
-  height: 600px;
-
+  height: 100%;
   width: 100%;
   display: flex; //이미지들을 가로로 나열합니다.
 `;
