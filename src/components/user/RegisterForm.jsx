@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Wrapper from "../../elements/Wrapper";
 import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
 import SmSecondaryBtn from "../../elements/SmSecondaryBtn";
 import useValidation from "../../hooks/useValidation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __postDupEmail, __postRegister } from "../../redux/modules/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [email, emailCheck, setEmail] = useValidation("email");
@@ -13,25 +14,26 @@ const RegisterForm = () => {
   const [password, passwordCheck, setPassword] = useValidation("password");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const isSignup = useSelector((state) => state.userSlice.isSignup);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const registerSubmitHandler = (e) => {
     e.preventDefault();
-    const signup = {
-      email,
-      nickname,
-      password,
-      confirmPassword,
-    };
-    dispatch(__postRegister(signup));
+    dispatch(__postRegister({ email, nickname, password, confirmPassword }));
   };
 
   const dupEmail = () => {
-    const dupCheck = {
-      email,
-    };
-    dispatch(__postDupEmail(dupCheck));
+    dispatch(__postDupEmail({ email }));
   };
+
+  useEffect(() => {
+    if (!isSignup) return;
+    if (isSignup === true) {
+      alert("회원가입 완료");
+      navigate("/login");
+    }
+  }, [isSignup]);
 
   return (
     <Wrapper>

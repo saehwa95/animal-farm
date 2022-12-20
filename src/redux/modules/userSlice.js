@@ -12,11 +12,8 @@ const initialState = {
   dupCheck: false,
   isLoading: false,
   error: null,
-};
-
-// post 성공 후 page 이동
-const redirect = (redirectUrl) => {
-  window.location = redirectUrl;
+  isLogin: false,
+  isSignup: false,
 };
 
 //Thunk
@@ -24,10 +21,8 @@ const redirect = (redirectUrl) => {
 export const __postRegister = createAsyncThunk(
   "user/postRegister",
   async (payload, thunkAPI) => {
-    console.log("회원가입 체크",payload);
     try {
-      const res = await axios.post("http://localhost:3001/user", payload);
-      window.alert("회원가입에 성공했습니다.");
+      const res = await axios.post("http://43.201.27.229/api/signup", payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       window.alert("회원가입에 실패했습니다.");
@@ -40,13 +35,15 @@ export const __postRegister = createAsyncThunk(
 export const __postDupEmail = createAsyncThunk(
   "user/dupEmail",
   async (payload, thunkAPI) => {
-    console.log("이메일 중복 체크",payload);
     try {
-      const res = await axios.post("http://localhost:3001/user", payload);
-      window.alert("중복된 ID가 있습니다.");
+      const res = await axios.post(
+        "http://43.201.27.229/api/signup/checkId/",
+        payload
+      );
+      window.alert("사용 가능한 ID입니다.");
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
-      window.alert("사용 가능한 ID입니다.");
+      window.alert("중복된 ID가 있습니다.");
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -56,11 +53,10 @@ export const __postDupEmail = createAsyncThunk(
 export const __postLogin = createAsyncThunk(
   "user/postLogin",
   async (payload, thunkAPI) => {
-    console.log("로그인 체크",payload);
     try {
-      const res = await axios.post("http://localhost:3001/user", payload);
-      window.alert("로그인 성공!!");
-      return thunkAPI.fulfillWithValue(res.data);
+      const res = await axios.post("http://43.201.27.229/api/login", payload);
+      localStorage.setItem("token", res.data.token);
+      return thunkAPI.fulfillWithValue(res.data.token);
     } catch (error) {
       window.alert("가입하신 이메일, 비밀번호와 다릅니다!!");
       return thunkAPI.rejectWithValue(error);
@@ -80,7 +76,7 @@ const userSlice = createSlice({
     },
     [__postRegister.fulfilled]: (state) => {
       state.isLoading = false;
-      redirect("/login");
+      state.isSignup = true;
     },
     [__postRegister.rejected]: (state, action) => {
       state.isLoading = false;
@@ -106,8 +102,7 @@ const userSlice = createSlice({
     },
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.user = action.payload;
-      redirect("/");
+      state.isLogin = true;
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
