@@ -7,7 +7,6 @@ import Wrapper from "../../elements/Wrapper";
 import MdPrimaryBtn from "../../elements/MdPrimaryBtn";
 import { __addPosts } from "../../redux/modules/postsSlice";
 import axios from "axios";
-import { type } from "@testing-library/user-event/dist/type";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -79,32 +78,18 @@ const Write = () => {
     <>
       <Wrapper>
         <Stform>
-          {/* {image.map((image) => (
-            <div key={image.id}>
-              <img src={image} />
-              <Delete onClick={() => handleDeleteImage(id)} />
-            </div>
-          ))} */}
           <ImgBox>
             {console.log(image)}
             {img.map((img, i) => (
               <div key={i}>
                 <img
                   src={img}
-                  width="200px"
-                  height="200px"
+                  width="240px"
+                  height="240px"
                   object-fit="cover"
                 />
               </div>
             ))}
-            {/* {image && (
-              <img
-                src={image}
-                width="200px"
-                height="200px"
-                object-fit="cover"
-              />
-            )} */}
           </ImgBox>
           <ImgButton For="file" onChange={onChangeSelectImages}>
             사진 첨부하기
@@ -118,14 +103,16 @@ const Write = () => {
           </ImgButton>
           <TextBox
             onChange={inputHandler}
-            width="1000px"
+            width="100%"
             height="240px"
             type="text"
             name="text"
             value={input.text}
           ></TextBox>
-          <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
         </Stform>
+        <div style={{ margin: "20px" }}>
+          <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
+        </div>
       </Wrapper>
     </>
   );
@@ -138,21 +125,20 @@ const Stform = styled.form`
 `;
 
 const ImgBox = styled.div`
-  width: 300px;
-  height: 150px;
-  object-fit: cover;
   display: flex;
   gap: 8px;
-
-  justify-content: flex-start;
 `;
 
 const ImgButton = styled.label`
   border: 1px solid #cecece;
   font-weight: bold;
   border-radius: 5px;
-  width: 1000px;
+  width: 100%;
   height: 30px;
+  padding: 10px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
 `;
+
 export default Write;
