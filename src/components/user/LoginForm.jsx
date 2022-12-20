@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Wrapper from "../../elements/Wrapper";
 import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
 import LgSecondaryBtn from "../../elements/LgSecondaryBtn";
 import useValidation from "../../hooks/useValidation";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __postLogin } from "../../redux/modules/userSlice";
 
 const LoginForm = () => {
   const [email, emailCheck, setEmail] = useValidation("email");
   const [password, passwordCheck, setPassword] = useValidation("password");
-
+  const isLogin = useSelector((state) => state.userSlice.isLogin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
-    const login = {
-      email,
-      password,
-    }
-    dispatch(__postLogin(login))
-    navigate("/");
+    dispatch(__postLogin({ email, password }));
   };
+
+  useEffect(() => {
+    if (!isLogin) return;
+    if (isLogin) {
+      alert("로그인 성공");
+      navigate("/");
+    }
+  }, [isLogin]);
 
   return (
     <Wrapper>
