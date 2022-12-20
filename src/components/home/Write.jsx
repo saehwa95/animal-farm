@@ -22,27 +22,25 @@ const Write = () => {
   };
 
   //이미지 리더
-  const onChangeSelectImages = (e) => {
+  const onChangeSelectImages = async (e) => {
     const img = e.target.files;
-    console.log(img);
 
     let fileURLs = [];
-
     let file;
     let filesLength = img.length > 5 ? 5 : img.length;
 
     for (let i = 0; i < filesLength; i++) {
       file = img[i];
-      console.log("이미지", img);
 
       let reader = new FileReader();
       reader.onload = () => {
-        console.log(reader.result);
+        // console.log(reader.result);
         fileURLs[i] = reader.result;
         setImg([...fileURLs]);
       };
       reader.readAsDataURL(file);
     }
+
     setImage([...img]);
   };
 
@@ -50,34 +48,26 @@ const Write = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log(image);
-    // console.log(image[0]);
-    // for(let val of image) {
-    //   console.log(val.name);
-    // }
+    console.log(image.length);
+
     let formData = new FormData();
-    formData.append("input", input.text);
+    formData.append("text", input.text);
+    // formData.append("images", [...image]);
+    for (let i = 0; i < image.length; i++) {
+      formData.append("images", image[i]);
+    }
+    console.log("images", [...image]);
+    console.log(formData.getAll("images"));
 
-    for (let i = 0; i < image.length; i++) {
-      console.log("image", image[i]);
-    }
-    for (let i = 0; i < image.length; i++) {
-      formData.append("files", image[i]);
-    }
-    axios.post("http://localhost:3001/posts", {
-      text: formData.get("input"),
-      files: formData.getAll("files"),
-    });
-    // dispatch(__addPosts({ formData: formData }));
+    dispatch(__addPosts(formData));
   };
-
-  //navigate("/");
 
   return (
     <>
       <Wrapper>
         <Stform>
           <ImgBox>
-            {console.log(image)}
+            {/* {console.log(image)} */}
             {img.map((img, i) => (
               <div key={i}>
                 <img
@@ -96,6 +86,7 @@ const Write = () => {
               multiple
               accept="image/*"
               id="fileUpload"
+              name="images"
               style={{ display: "none" }}
             />
           </ImgButton>
@@ -107,10 +98,10 @@ const Write = () => {
             name="text"
             value={input.text}
           ></TextBox>
+          <div style={{ margin: "20px" }}>
+            <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
+          </div>
         </Stform>
-        <div style={{ margin: "20px" }}>
-          <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
-        </div>
       </Wrapper>
     </>
   );

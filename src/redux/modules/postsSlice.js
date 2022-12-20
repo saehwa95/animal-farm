@@ -1,14 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import commentsSlice from "./commentSlice";
+
 const instance = axios.create({
-  baseURL: "http://localhost:3001",
-  headers: { "X-Custom-Header": "foobar" },
-  timeout: 10000,
+  baseURL: "http://43.201.27.229/",
+  headers: {
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+  timeout: 1000,
 });
+
 const initialState = {
   posts: [
     {
-      imageUrl: [],
+      imagesUrl: [],
       text: "",
     },
   ],
@@ -34,24 +39,14 @@ export const __getPosts = createAsyncThunk(
 export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
   async (payload, thunkAPI) => {
-    //console.log(payload);
-    // for (let entries of payload.formData.keys()) {
-    //   console.log("keys in slice ", entries);
-    // }
-    // for (let entries of payload.formData.values()) {
-    //   console.log("keys in slice ", entries);
-    // }
+    const token = localStorage.getItem("token");
 
-    // console.log("저장", payload);
     try {
-      //console.log("dddd");
-      const postdata = await instance.post(
-        "http://localhost:3001/posts",
-        payload.formData
-      );
-      return postdata.data;
+      payload.append("token", token);
+      const response = await instance.post("/api/posts", payload);
+      console.log(response.data.message);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -108,12 +103,12 @@ export const postsSlice = createSlice({
       state.isLoading = true;
     },
     [__addPosts.fulfilled]: (state, action) => {
-      state.posts = action.payload;
       state.isLoading = false;
+      state.posts = action.payload;
     },
     [__addPosts.rejected]: (state, action) => {
-      state.error = action.payload;
       state.isLoading = false;
+      state.error = true;
     },
     //delete
     [__deletePosts.pending]: (state) => {
