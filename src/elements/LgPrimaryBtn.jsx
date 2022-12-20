@@ -31,7 +31,7 @@ const LgPrimaryBtn = ({
 };
 // props 정리, props의 타입모듈.
 LgPrimaryBtn.defaultProps = {
-  bgColor: "#000",
+  bgColor: "#7e54a2",
   color: "#fff",
   radius: "5px",
   onclick: () => {},
@@ -48,7 +48,7 @@ const StLgPrimaryBtn = styled.button`
   border: ${({ border }) => border};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  padding : 0px;
+  padding: 0px;
   cursor: pointer;
   &:disabled {
     cursor: default;

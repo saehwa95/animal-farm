@@ -29,13 +29,13 @@ const SmPrimaryBtn = ({
 };
 // props 정리, props의 타입모듈.
 SmPrimaryBtn.defaultProps = {
-  bgColor: "#000",
+  bgColor: "#7e54a2",
   color: "#fff",
   radius: "5px",
   onclick: () => {},
   width: "75px",
   border: "1px solid #cfcfcf",
-  height: "55px"
+  height: "55px",
 };
 const StSmPriBtn = styled.button`
   background-color: ${({ bgColor }) => bgColor};
@@ -46,6 +46,5 @@ const StSmPriBtn = styled.button`
   height: ${({ height }) => height};
   border: ${({ border }) => border};
   cursor: pointer;
-
 `;
 export default SmPrimaryBtn;

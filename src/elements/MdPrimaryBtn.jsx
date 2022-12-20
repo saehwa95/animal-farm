@@ -29,7 +29,7 @@ const MdPrimaryBtn = ({
 };
 // props 정리, props의 타입모듈.
 MdPrimaryBtn.defaultProps = {
-  bgColor: "#000",
+  bgColor: "#7e54a2",
   color: "#fff",
   radius: "5px",
   onclick: () => {},
