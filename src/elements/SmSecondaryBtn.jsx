@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 import styled from "styled-components";
 const SmSecondaryBtn = ({
@@ -10,6 +11,7 @@ const SmSecondaryBtn = ({
   height,
   padding,
   border,
+  type,
 }) => {
   const styles = {
     bgColor,
@@ -22,7 +24,7 @@ const SmSecondaryBtn = ({
     border,
   };
   return (
-    <StSmSeconBtn {...styles} onClick={onClick}>
+    <StSmSeconBtn {...styles} onClick={onClick} type="button">
       {children}
     </StSmSeconBtn>
   );
@@ -35,7 +37,8 @@ SmSecondaryBtn.defaultProps = {
   onclick: () => {},
   width: "75px",
   border: "1px solid #cfcfcf",
-  height: "55px"
+  height: "55px",
+  type: "button",
 };
 const StSmSeconBtn = styled.button`
   background-color: ${({ bgColor }) => bgColor};
