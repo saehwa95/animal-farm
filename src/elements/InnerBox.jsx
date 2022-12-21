@@ -16,7 +16,7 @@ const Box = ({
   backgroundColor,
   borderTop,
   borderBottom,
-
+  flexWrap,
 }) => {
   const styles = {
     display,
@@ -31,7 +31,7 @@ const Box = ({
     backgroundColor,
     borderTop,
     borderBottom,
-
+    flexWrap
   };
   return <StCard {...styles}>{children}</StCard>;
 };
@@ -42,6 +42,7 @@ Box.defaultProps = {
 };
 const StCard = styled.div`
   display: ${({ display }) => display};
+  flex-wrap: ${({flexWrap}) => flexWrap};
   flex-direction: ${({ direction }) => direction};
   justify-content: ${({ justifyContent }) => justifyContent};
   align-items: ${({ alignItems }) => alignItems};

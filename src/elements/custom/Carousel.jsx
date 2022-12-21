@@ -1,19 +1,19 @@
+import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 import React, {useRef, useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { NavLink } from "react-router-dom";
 
-import Img1 from '../../images/image1.JPG'
-import Img2 from '../../images/image2.JPG'
-import Nata from '../../images/nata.jpeg'
-import Slide from './Slide';
-const TOTAL_SLIDES = 2;
+const Carousel = ({postId, images}) => {
 
-const Carousel = () => {
-  
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
+  const totalSlide = images.length-1;
+
+  // console.log(images);
+
   const nextSlide = () => {
-    if (currentSlide >= TOTAL_SLIDES) { // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화합니다.
+    if (currentSlide >= totalSlide) { // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화합니다.
       setCurrentSlide(0);
     } else {
       setCurrentSlide(currentSlide + 1);
@@ -21,7 +21,7 @@ const Carousel = () => {
   };
   const prevSlide = () => {
     if (currentSlide === 0) {
-      setCurrentSlide(TOTAL_SLIDES);
+      setCurrentSlide(totalSlide);
     } else {
       setCurrentSlide(currentSlide - 1);
     }
@@ -34,18 +34,18 @@ const Carousel = () => {
     
   return (
     <>
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <Container>
-          {/* {currentSlide} */}
+      <Container>
+        <NavLink to={`/detail/${postId}`}>
           <SliderContainer ref={slideRef}>
-            <Slide img={Img1} />
-            <Slide img={Img2} />
-            <Slide img={Nata} />
+            {images?.map((image, index) => {
+              return <Slide key={index} src={image}/>
+            })}
           </SliderContainer>
-        </Container>
-        <Button onClick={prevSlide}>＜</Button>
-        <Button onClick={nextSlide}>＞</Button>
-      </div>
+          </NavLink>
+      </Container>
+    
+      <Button onClick={prevSlide}>＜</Button>
+      <Button onClick={nextSlide}>＞</Button>
     </>
   );
 };
@@ -54,7 +54,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position:relative;
-  overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록 .
+  overflow: hidden; // 선을 넘어간 이미지들은 보이지 않도록
 `;
 const Button = styled.button`
   position: absolute;
@@ -79,7 +79,11 @@ const SliderContainer = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
-  display: flex; //이미지들을 가로로 나열합니다.
+  display: flex;
 `;
 
+const Slide = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 export default Carousel;
