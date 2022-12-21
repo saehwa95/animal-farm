@@ -6,18 +6,18 @@ import Card from "../elements/Card";
 import InnerBox from "../elements/InnerBox"
 
 import { useNavigate } from "react-router-dom";
-import { __getPosts, __deletePosts } from "../redux/modules/postsSlice2";
+import { __getPosts, __deletePosts } from "../redux/modules/postsSlice";
 import { useSelector, useDispatch } from 'react-redux';
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {posts, isloading, error} = useSelector((state) => state.postsSlice2);
+  const {posts, isloading, error} = useSelector((state) => state.postsSlice);
 
   useEffect(()=>{
     dispatch(__getPosts());
-  }, [dispatch]);
+  }, []);
 
   return (
     <Wrapper>
@@ -32,9 +32,9 @@ const Home = () => {
       onClick={() => dispatch(__deletePosts(61))}
       >데이터 삭제</MdPrimaryBtn>
       <InnerBox flexWrap="wrap" gap="40px">
-      {posts?.map((post, index) => {
-        return <Card key={index} post={post} style={{ margin: "40px" }}></Card>
-      })}
+        {posts?.map((post, index) => {
+          return <Card key={index} post={post} style={{ margin: "40px" }}></Card>
+        })}
       </InnerBox>
       
     </Wrapper>
