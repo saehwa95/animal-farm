@@ -24,7 +24,7 @@ const LoginForm = () => {
     if (!isLogin) return;
     if (isLogin) {
       alert("로그인 성공");
-      navigate("/");
+      navigate("/Home");
     }
   }, [isLogin]);
 

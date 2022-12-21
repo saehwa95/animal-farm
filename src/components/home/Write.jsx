@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -6,11 +6,9 @@ import TextBox from "../../elements/TextBox";
 import Wrapper from "../../elements/Wrapper";
 import MdPrimaryBtn from "../../elements/MdPrimaryBtn";
 import { __addPosts } from "../../redux/modules/postsSlice";
-import axios from "axios";
 
 const Write = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
   const [img, setImg] = useState([]);
@@ -26,15 +24,12 @@ const Write = () => {
     const img = e.target.files;
 
     let fileURLs = [];
-    let file;
     let filesLength = img.length > 5 ? 5 : img.length;
-
     for (let i = 0; i < filesLength; i++) {
-      file = img[i];
+      let file = img[i];
 
       let reader = new FileReader();
       reader.onload = () => {
-        // console.log(reader.result);
         fileURLs[i] = reader.result;
         setImg([...fileURLs]);
       };
@@ -47,18 +42,11 @@ const Write = () => {
   //등록하기
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(image);
-    console.log(image.length);
-
     let formData = new FormData();
     formData.append("text", input.text);
-    // formData.append("images", [...image]);
     for (let i = 0; i < image.length; i++) {
       formData.append("images", image[i]);
     }
-    console.log("images", [...image]);
-    console.log(formData.getAll("images"));
-
     dispatch(__addPosts(formData));
   };
 
@@ -67,7 +55,6 @@ const Write = () => {
       <Wrapper>
         <Stform>
           <ImgBox>
-            {/* {console.log(image)} */}
             {img.map((img, i) => (
               <div key={i}>
                 <img
@@ -88,6 +75,7 @@ const Write = () => {
               id="fileUpload"
               name="images"
               style={{ display: "none" }}
+              required
             />
           </ImgButton>
           <TextBox
@@ -97,8 +85,9 @@ const Write = () => {
             type="text"
             name="text"
             value={input.text}
+            required
           ></TextBox>
-          <div style={{ margin: "20px" }}>
+          <div style={{ margin: "20px", justifyContent: "center" }}>
             <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
           </div>
         </Stform>

@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
   useEffect(() => {
     if (!isSignup) return;
-    if (isSignup === true) {
+    if (isSignup) {
       alert("회원가입 완료");
       navigate("/login");
     }

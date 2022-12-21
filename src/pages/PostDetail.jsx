@@ -1,64 +1,44 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import Wrapper from '../elements/Wrapper';
 import styled from 'styled-components';
+import { useParams, NavLink } from 'react-router-dom';
 
-import Comment from '../components/detail/Comment';
-import TextBox from '../elements/TextBox';
+import PostContainer from '../components/detail/PostContainer';
+
 import MdPrimaryBtn from '../elements/MdPrimaryBtn';
 import MdSecondaryBtn from '../elements/MdSecondaryBtn';
 import InnerBox from '../elements/InnerBox'
-import { useNavigate, useParams } from 'react-router-dom';
-
-import Carousel from '../elements/carousel/Carousel';
-import CustomCarousel from '../elements/custom/Carousel'
+import CommentContainer from '../components/detail/CommentContainer';
+import { __getDetailPost } from "../redux/modules/postsSlice";
+import { useSelector, useDispatch } from 'react-redux';
 
 const PostDetail = () => {
-  const id = useParams();
-  const navigate = useNavigate();
-  console.log(id.id);
+  const postId = useParams();
+  const dispatch = useDispatch();
+
+  // console.log(postId);
+  // console.log(typeof Number(postId.id));
+  // console.log(Number(postId.id))
+
+  // console.log(text);
+
+  useEffect(() => {
+    dispatch(__getDetailPost({postId: postId}));
+  },[]);
+
   return (
     <Wrapper>
-      <PostContainer>
-        <CustomCarousel/>
-        <TextBox width="590px" height="568px"/>
-      </PostContainer>
+      <PostContainer/>
       <InnerBox padding="40px 0" gap="1.3em" justifyContent="center" >
-        <MdPrimaryBtn>
-          수정하기
-        </MdPrimaryBtn>
+        <NavLink to={`/update/${postId.id}`}>
+          <MdPrimaryBtn>수정하기</MdPrimaryBtn>
+        </NavLink>
         <MdSecondaryBtn>삭제하기</MdSecondaryBtn>
       </InnerBox>
-      <InnerBox justifyContent="space-between"  width="100%" margin="50px 0 0" padding="40px 0" borderTop="solid">
-        <CommentBox>
-        </CommentBox>
-        <MdPrimaryBtn>등록</MdPrimaryBtn>
-      </InnerBox>
-      <InnerBox justifyContent="space-between" width="100%">
-        {/* comment?.map(comment) => { return <Comment ...props />} */}
-        <Comment></Comment>
-      </InnerBox>
+      <CommentContainer text={""}/>
     </Wrapper>
   );
 };
-const PostContainer = styled.div`
-  width: 1200px;
-  display: flex;
-  flex-direciton: row;
-  justify-content: space-between;
-  gap: 20px;
-`;
-
-const CommentBox = styled.input`
-  width: 80%;
-  padding: 0 10px;
-  background-color: #f5f5f5;
-  color: "#000";
-  padding: "16px";
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-`;
 
 export default PostDetail;
