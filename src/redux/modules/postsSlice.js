@@ -15,10 +15,10 @@ const initial = {
     {
       postId: "",
       text: "",
-      created_at : "",
+      created_at: "",
       userId: "",
-      imagesUrl: [] 
-    }
+      imagesUrl: [],
+    },
   ],
   isloading: false,
   error: false,
@@ -29,7 +29,7 @@ export const __getPosts = createAsyncThunk(
   "postsSlice/getPosts",
   async (payload, thunkAPI) => {
     try {
-      const {data} = await instance.get("/api/posts");
+      const { data } = await instance.get("/api/posts");
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -94,7 +94,7 @@ export const __UpdatePosts = createAsyncThunk(
   "UPDATE_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const updatedata = await axios.put();
+      const updatedata = await axios.patch();
       return updatedata.data;
     } catch (error) {
       console.log(error);
@@ -107,14 +107,14 @@ export const __UpdatePosts = createAsyncThunk(
 export const postsSlice = createSlice({
   name: "posts",
   initialState: initial,
-  reducers: { },
+  reducers: {},
   extraReducers: {
     //get
     [__getPosts.pending]: (state, action) => {
       console.log("now pending");
       state.isLoading = true;
     },
-    [__getPosts.fulfilled]: (state, {payload}) => {
+    [__getPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.posts = [...payload.data];
       console.log("fulfilled ", state.posts);

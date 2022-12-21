@@ -7,21 +7,27 @@ const TextButton = ({
   padding,
   width,
   height,
-  fontSize
+  fontSize,
+  onClick,
 }) => {
   const styles = {
     color,
     padding,
     width,
     height,
-    fontSize
+    fontSize,
   };
-  return <StTextButton {...styles}>{children}</StTextButton>;
+  return (
+    <StTextButton {...styles} onClick={onClick}>
+      {children}
+    </StTextButton>
+  );
 };
 // props 정리, props의 타입모듈.
 TextButton.defaultProps = {
   fontSize: "18px",
   color: "#000",
+  onClick: () => {},
 };
 
 const StTextButton = styled.button`
@@ -34,7 +40,7 @@ const StTextButton = styled.button`
   border: none;
   border-radius: 5px;
   outline: none;
-  pointer: curser;
+  cursor: pointer;
 `;
 
 export default TextButton;

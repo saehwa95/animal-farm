@@ -9,7 +9,6 @@ import { __addPosts } from "../../redux/modules/postsSlice";
 
 const Write = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
   const [img, setImg] = useState([]);
@@ -88,7 +87,7 @@ const Write = () => {
             value={input.text}
             required
           ></TextBox>
-          <div style={{ margin: "20px" }}>
+          <div style={{ margin: "20px", justifyContent: "center" }}>
             <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
           </div>
         </Stform>
