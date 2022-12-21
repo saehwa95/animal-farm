@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_FRONT_BASE_URL,
+  baseURL: "http://43.201.27.229",
   headers: {
     authorization: `Bearer ${localStorage.getItem("token")}`,
   },
@@ -76,6 +76,7 @@ export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
   async (payload, thunkAPI) => {
     try {
+      console.log(payload);
       const response = await instance.post("/api/posts", payload);
       window.alert(response.data.message);
       window.location.replace("/Home");

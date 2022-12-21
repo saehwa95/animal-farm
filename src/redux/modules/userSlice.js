@@ -3,7 +3,7 @@ import axios from "axios";
 import jwt from "jwt-decode";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_FRONT_BASE_URL,
+  baseURL: "http://43.201.27.229",
   headers: {
     authorization: `Bearer ${localStorage.getItem("token")}`,
   },
