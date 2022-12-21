@@ -1,7 +1,5 @@
 import React from "react";
 import Wrapper from "../elements/Wrapper";
-import { Link } from "react-router-dom";
-import LgPrimaryBtn from "../elements/LgPrimaryBtn";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +8,7 @@ const Intro = () => {
   return (
     <Wrapper>
       <IntroBtn>
-        <img src="https://velog.velcdn.com/images/buddesign/post/c7d748fa-84e9-4f9e-822a-ccea670ea7f9/image.png"></img>
+        <img src="https://velog.velcdn.com/images/buddesign/post/c7d748fa-84e9-4f9e-822a-ccea670ea7f9/image.png" alt=""></img>
         <button
           onClick={() => {
             navigate("/Home");
