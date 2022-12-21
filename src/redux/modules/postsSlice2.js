@@ -11,38 +11,6 @@ const instance = axios.create({
 });
 
 
-//게시글 조회
-export const __getPosts = createAsyncThunk(
-  "postsSlice/getPosts",
-  async (payload, thunkAPI) => {
-    try {
-      const {data} = await instance.get("/api/posts");
-      return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-//게시글 삭제
-export const __deletePosts = createAsyncThunk(
-  "DELETE_POSTS",
-  async (payload, thunkAPI) => {
-    console.log(payload);
-    const token = localStorage.getItem("token");
-    console.log(token);
-    try {
-      // const response = await instance.delete(`/api/posts/${payload}`, token);
-      const response = await instance.delete(`/api/posts/${payload}`);
-      console.log(response.data.message);
-      
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
 
 //게시글 수정
 export const __UpdatePosts = createAsyncThunk(
