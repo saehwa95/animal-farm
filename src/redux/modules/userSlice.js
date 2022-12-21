@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import jwt from "jwt-decode";
 
 //initialstate 작성
 const initialState = {
-  user: [
-    {
-      nickname: "",
-      userId: "",
-    },
-  ],
+  nickname: "",
+  userId: "",
   dupCheck: false,
   isLoading: false,
   error: null,
@@ -68,7 +65,11 @@ export const __postLogin = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    __logout(state, action) {
+      state.isLogin = false;
+    },
+  },
   extraReducers: {
     //__postRegister
     [__postRegister.pending]: (state) => {
@@ -101,6 +102,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [__postLogin.fulfilled]: (state, action) => {
+      state.nickname = jwt(action.payload);
       state.isLoading = false;
       state.isLogin = true;
     },
@@ -111,4 +113,5 @@ const userSlice = createSlice({
   },
 });
 
+export const {__logout}= userSlice.actions
 export default userSlice.reducer;

@@ -16,7 +16,7 @@ const PostContainer = () => {
 const PostDetailContainer = styled.div`
   width: 1200px;
   display: flex;
-  flex-direciton: row;
+  flex-direction: row;
   justify-content: space-between;
   gap: 20px;
 `;
