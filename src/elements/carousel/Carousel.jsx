@@ -21,11 +21,10 @@ const ImgSlider = () => {
         navigation
 				scrollbar={{ draggable: true }}
 				loop={true}
-				
       >
-        <SwiperSlide><img src={Nata} alt="Nata"/></SwiperSlide>
+        {/* <SwiperSlide><img src={Nata} alt="Nata"/></SwiperSlide>
 				<SwiperSlide><img src={Nata} alt="Nata"/></SwiperSlide>
-				<SwiperSlide><img src={Nata} alt="Nata"/></SwiperSlide>
+				<SwiperSlide><img src={Nata} alt="Nata"/></SwiperSlide> */}
 				
       </Swiper>
     </CarouselWrapper>

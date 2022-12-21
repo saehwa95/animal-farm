@@ -2,24 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Carousel from './custom/Carousel';
 
-const Card = () => {
+const Card = ({post}) => {
+  console.log(post);
   return (
-    <>
-      <CardWrap>
-        
-        <div>
-          {/* <CardTitle>Title</CardTitle>
-          <CardText>{el.createdAt}</CardText>
-          <CardText>{el.content}</CardText> */}
-        </div>
-        {/* <CardContents> */}
-          {/* <NavLink to={`/detail/${el.id}`}> */}
-            {/* <CardButton>Detail</CardButton> */}
-          {/* </NavLink> */}
-        {/* </CardContents> */}
-        <Carousel></Carousel>
-      </CardWrap>
-    </>
+    <CardWrap>
+      <Carousel postId={post.postId} images={post.imagesUrl}></Carousel>
+    </CardWrap>
   );
 };
 
@@ -46,57 +34,5 @@ const CardWrap = styled.div`
   }
 `;
 
-const CardHeader = styled.div`
-  height: 200px;
-  width: 100%;
-  background-color: ${({ mode }) => {
-    console.log(mode);
-    switch (mode) {
-      case "React":
-        return "#ad5858";
-      case "Redux":
-        return "#7c976c";
-      case "Javascript":
-        return "#d6a680";
-      default:
-        return "#48404d";
-    }
-  }};
-  border-radius: 100% 0% 100% 0% / 0% 50% 50% 100%;
-  display: grid;
-  place-items: center;
-  i {
-    color: #fff;
-    font-size: 72px;
-  }
-`;
-
-const CardContents = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
-  margin: 0 auto;
-`;
-
-const CardTitle = styled.h1`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 16px;
-  margin-top: 10px;
-`;
-const CardText = styled.p`
-  text-align: center;
-  font-size: 12px;
-`;
-const CardButton = styled.button`
-  border: none;
-  border-radius: 100px;
-  padding: 5px 30px;
-  background: #f9d6d4;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  cursor: pointer;
-`;
 
 export default Card;
