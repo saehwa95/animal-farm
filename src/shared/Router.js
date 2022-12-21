@@ -14,8 +14,8 @@ import NotFound from '../pages/404/NotFound';
 const Router = () => {
   return (
     <BrowserRouter>
+      <Layout>
         <Routes>
-          <Layout>
             <Route path="/" element={<Intro />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -24,9 +24,8 @@ const Router = () => {
             <Route path="/detail/:id" element={<PostDetail />} />
             <Route path="/update/:id" element={<PostUpdate />} />
             <Route path="/*" element={<NotFound />} />
-          </Layout>
         </Routes>
-      
+      </Layout>
     </BrowserRouter>
   );
 };
