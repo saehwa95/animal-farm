@@ -37,6 +37,10 @@ const PostUpdate = () => {
     dispatch(__addPosts(formData));
   };
 
+  useEffect(() => {
+    dispatch(getData(postId));
+  }, [dispatch, postId]);
+
   return (
     <>
       <Wrapper>
