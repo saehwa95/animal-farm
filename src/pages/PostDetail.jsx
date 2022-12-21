@@ -1,32 +1,42 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import Wrapper from '../elements/Wrapper';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useParams, NavLink } from 'react-router-dom';
 
 import PostContainer from '../components/detail/PostContainer';
 
-import Comment from '../components/detail/Comment';
 import MdPrimaryBtn from '../elements/MdPrimaryBtn';
 import MdSecondaryBtn from '../elements/MdSecondaryBtn';
 import InnerBox from '../elements/InnerBox'
 import CommentContainer from '../components/detail/CommentContainer';
+import { __getDetailPost } from "../redux/modules/postsSlice";
+import { useSelector, useDispatch } from 'react-redux';
 
 const PostDetail = () => {
+  const postId = useParams();
+  const dispatch = useDispatch();
 
-  // const {posts, isloading, error} = useSelector((state) => state.postsSlice2);
+  // console.log(postId);
+  // console.log(typeof Number(postId.id));
+  // console.log(Number(postId.id))
 
-  const id = useParams();
+  // console.log(text);
+
+  useEffect(() => {
+    dispatch(__getDetailPost({postId: postId}));
+  },[]);
 
   return (
     <Wrapper>
       <PostContainer/>
       <InnerBox padding="40px 0" gap="1.3em" justifyContent="center" >
-        <MdPrimaryBtn>수정하기</MdPrimaryBtn>
+        <NavLink to={`/update/${postId.id}`}>
+          <MdPrimaryBtn>수정하기</MdPrimaryBtn>
+        </NavLink>
         <MdSecondaryBtn>삭제하기</MdSecondaryBtn>
       </InnerBox>
-      <CommentContainer/>
+      <CommentContainer text={""}/>
     </Wrapper>
   );
 };

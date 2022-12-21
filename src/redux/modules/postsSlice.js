@@ -37,6 +37,26 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
+
+// const thisData = posts?.filter((post) => {
+//   console.log(post.postId);
+//   return post.postId === Number(postId.id);
+// })
+
+export const __getDetailPost = createAsyncThunk(
+  "postsSlice/getDetailPost",
+  async (payload, thunkAPI) => {
+    try {
+      console.log(payload.postId.id);
+      const data = await instance.get(`/api/posts/${payload.postId.id}`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
 //게시글 삭제
 export const __deletePosts = createAsyncThunk(
   "DELETE_POSTS",
@@ -92,12 +112,10 @@ export const postsSlice = createSlice({
     //get
     [__getPosts.pending]: (state, action) => {
       console.log("now pending");
-      // console.log("pending ", state.data);
       state.isLoading = true;
     },
     [__getPosts.fulfilled]: (state, {payload}) => {
       state.isLoading = false;
-      console.log(state);
       state.posts = [...payload.data];
       console.log("fulfilled ", state.posts);
     },
