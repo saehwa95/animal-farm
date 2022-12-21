@@ -39,15 +39,15 @@ export const __getPosts = createAsyncThunk(
 export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
   async (payload, thunkAPI) => {
-    const token = localStorage.getItem("token");
-
     try {
-      payload.append("token", token);
       const response = await instance.post("/api/posts", payload);
-      console.log(response.data.message);
+      window.alert(response.data.message);
+      window.location.replace("/Home");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error);
+      window.alert(error.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
