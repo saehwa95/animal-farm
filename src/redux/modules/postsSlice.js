@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import commentsSlice from "./commentSlice";
 
 const instance = axios.create({
-  baseURL: "http://43.201.27.229/",
+  baseURL: process.env.REACT_APP_FRONT_BASE_URL,
   headers: {
     authorization: `Bearer ${localStorage.getItem("token")}`,
   },
