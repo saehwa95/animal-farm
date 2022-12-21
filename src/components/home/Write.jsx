@@ -6,85 +6,101 @@ import TextBox from "../../elements/TextBox";
 import Wrapper from "../../elements/Wrapper";
 import MdPrimaryBtn from "../../elements/MdPrimaryBtn";
 import { __addPosts } from "../../redux/modules/postsSlice";
+import axios from "axios";
 
 const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [input, setInput] = useState("");
   const [image, setImage] = useState([]);
+  const [img, setImg] = useState([]);
 
+  //text input
   const inputHandler = (e) => {
     const value = e.target.value;
     setInput({ ...input, text: value });
   };
 
-  const onChangeSelectImages = (e) => {
+  //이미지 리더
+  const onChangeSelectImages = async (e) => {
     const img = e.target.files;
-    console.log(img);
-    // let imageUrlList = []; //현재 MYIMAGE 복사
 
-    // for (let i = 0; i < imageUrlList.length; i++) {
-    //   const imageUrl = URL.createObjectURL(imageUrlList[i]);
-    //   imageUrlList.push(imageUrl);
-    // }
+    let fileURLs = [];
+    let file;
+    let filesLength = img.length > 5 ? 5 : img.length;
 
-    // if (imageUrlList.length > 5) {
-    //   imageUrlList = imageUrlList.slice(0, 5);
-    // }
-    // console.log("In onChangeSelectImages",imageUrlList);
+    for (let i = 0; i < filesLength; i++) {
+      file = img[i];
+
+      let reader = new FileReader();
+      reader.onload = () => {
+        // console.log(reader.result);
+        fileURLs[i] = reader.result;
+        setImg([...fileURLs]);
+      };
+      reader.readAsDataURL(file);
+    }
+
     setImage([...img]);
-    // if (image === null || image.length !== 5) {
-    //   alert("이미지는 5장 넣어주세요");
-    //   return;
-    // }
   };
 
+  //등록하기
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    console.log(image);
+    console.log(image.length);
 
     let formData = new FormData();
-    formData.append("input", input.text);
-    formData.append("images", image);
-
-    console.log(formData);
-    console.log(formData.images);
-
-    for (let entries of formData.keys()) {
-      console.log("keys ", entries);
+    formData.append("text", input.text);
+    // formData.append("images", [...image]);
+    for (let i = 0; i < image.length; i++) {
+      formData.append("images", image[i]);
     }
-    for (let entries of formData.values()) {
-      console.log("values ", entries);
-    }
+    console.log("images", [...image]);
+    console.log(formData.getAll("images"));
 
-    dispatch(__addPosts({ formData: formData }));
+    dispatch(__addPosts(formData));
   };
-
-  //navigate("/");
 
   return (
     <>
       <Wrapper>
         <Stform>
-          {/* {image.map((image) => (
-            <div key={image.id}>
-              <img src={image} />
-              <Delete onClick={() => handleDeleteImage(id)} />
-            </div>
-          ))} */}
-          {image && <img src={image} alt="preview-img" />}
-          <label htmlFor="input-file" onChange={onChangeSelectImages}>
-            <input type="file" multiple accept="image/*" id="fileUpload" />
-          </label>
+          <ImgBox>
+            {/* {console.log(image)} */}
+            {img.map((img, i) => (
+              <div key={i}>
+                <img
+                  src={img}
+                  width="240px"
+                  height="240px"
+                  object-fit="cover"
+                />
+              </div>
+            ))}
+          </ImgBox>
+          <ImgButton For="file" onChange={onChangeSelectImages}>
+            사진 첨부하기
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              id="fileUpload"
+              name="images"
+              style={{ display: "none" }}
+            />
+          </ImgButton>
           <TextBox
             onChange={inputHandler}
-            width="1000px"
+            width="100%"
             height="240px"
             type="text"
             name="text"
             value={input.text}
           ></TextBox>
-          <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
+          <div style={{ margin: "20px" }}>
+            <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
+          </div>
         </Stform>
       </Wrapper>
     </>
@@ -93,9 +109,25 @@ const Write = () => {
 
 const Stform = styled.form`
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   width: 1200px;
 `;
+
+const ImgBox = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const ImgButton = styled.label`
+  background-color: #fff;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+`;
+
 export default Write;

@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Wrapper from "../../elements/Wrapper";
 import LgPrimaryBtn from "../../elements/LgPrimaryBtn";
 import SmSecondaryBtn from "../../elements/SmSecondaryBtn";
 import useValidation from "../../hooks/useValidation";
+import { useDispatch, useSelector } from "react-redux";
+import { __postDupEmail, __postRegister } from "../../redux/modules/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [email, emailCheck, setEmail] = useValidation("email");
-  const [nickName, nickNameCheck, setNickName] = useValidation("nickName");
+  const [nickname, nicknameCheck, setNickname] = useValidation("nickname");
   const [password, passwordCheck, setPassword] = useValidation("password");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const isSignup = useSelector((state) => state.userSlice.isSignup);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const registerSubmitHandler = (e) => {
     e.preventDefault();
-    navigate("/Login");
+    dispatch(__postRegister({ email, nickname, password, confirmPassword }));
   };
+
+  const dupEmail = () => {
+    dispatch(__postDupEmail({ email }));
+  };
+
+  useEffect(() => {
+    if (!isSignup) return;
+    if (isSignup === true) {
+      alert("회원가입 완료");
+      navigate("/login");
+    }
+  }, [isSignup]);
 
   return (
     <Wrapper>
@@ -32,8 +48,9 @@ const RegisterForm = () => {
                 name="email"
                 value={email}
                 onChange={setEmail}
+                required
               />
-              <SmSecondaryBtn>중복확인</SmSecondaryBtn>
+              <SmSecondaryBtn onClick={dupEmail}>중복확인</SmSecondaryBtn>
             </div>
           </label>
         </div>
@@ -44,9 +61,9 @@ const RegisterForm = () => {
               <StInput
                 type="text"
                 placeholder="닉네임은 영문과 숫자를 혼합하여 작성해주세요."
-                name="nickName"
-                value={nickName}
-                onChange={setNickName}
+                name="nickname "
+                value={nickname}
+                onChange={setNickname}
               />
             </div>
           </label>
@@ -82,7 +99,7 @@ const RegisterForm = () => {
         <LgPrimaryBtn
           disabled={
             !emailCheck ||
-            !nickNameCheck ||
+            !nicknameCheck ||
             !passwordCheck ||
             password !== confirmPassword
           }

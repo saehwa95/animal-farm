@@ -37,7 +37,7 @@ const TextBox = ({
 };
 // props 정리, props의 타입모듈.
 TextBox.defaultProps = {
-  bgColor: "#F5F5F5",
+  bgColor: "#fff",
   color: "#000",
   padding: "16px",
   onChange: (e) => {},

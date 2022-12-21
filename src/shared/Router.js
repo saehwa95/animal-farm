@@ -8,17 +8,19 @@ import Login from "../pages/Login";
 import PostCreate from "../pages/PostCreate";
 import PostDetail from "../pages/PostDetail";
 import PostUpdate from "../pages/PostUpdate";
+import Intro from "../pages/Intro";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Intro />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<PostCreate />} />
-          {/* <Route path="/detail/:id" element={<PostDetail />} /> */}
+          <Route path="/detail/:id" element={<PostDetail />} />
           {/* <Route path="/update/:id" element={<PostUpdate/> } /> */}
         </Routes>
       </Layout>

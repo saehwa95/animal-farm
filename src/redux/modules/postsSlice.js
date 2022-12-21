@@ -1,16 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import commentsSlice from "./commentSlice";
+
+const instance = axios.create({
+  baseURL: "http://43.201.27.229/",
+  headers: {
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+  timeout: 1000,
+});
 
 const initialState = {
   posts: [
     {
-      postId: 0,
-      userId: 0,
-      nickname: "",
-      imageUrl: ["", ""],
+      imagesUrl: [],
       text: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
     },
   ],
   isloading: false,
@@ -35,23 +39,13 @@ export const __getPosts = createAsyncThunk(
 export const __addPosts = createAsyncThunk(
   "ADD_POSTS",
   async (payload, thunkAPI) => {
-    console.log(payload);
-    for (let entries of payload.formData.keys()) {
-      console.log("keys in slice ", entries);
-    }
-    for (let entries of payload.formData.values()) {
-      console.log("keys in slice ", entries);
-    }
+    const token = localStorage.getItem("token");
 
-    // console.log("저장", payload);
     try {
-      // console.log("dddd");
-      //   const postdata = await axios.post();
-      //   return postdata.data;
-      // } catch (error) {
-      //   console.log(error);
-      //   return thunkAPI.rejectWithValue(error);
-      return 1;
+      payload.append("token", token);
+      const response = await instance.post("/api/posts", payload);
+      console.log(response.data.message);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -61,7 +55,7 @@ export const __addPosts = createAsyncThunk(
 //게시글 삭제
 export const __deletePosts = createAsyncThunk(
   "DELETE_POSTS",
-  async (paylode, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
       const deletedata = await axios.delete();
       return deletedata.data;
@@ -75,7 +69,7 @@ export const __deletePosts = createAsyncThunk(
 //게시글 수정
 export const __UpdatePosts = createAsyncThunk(
   "UPDATE_POSTS",
-  async (paylode, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
       const updatedata = await axios.put();
       return updatedata.data;
@@ -109,12 +103,12 @@ export const postsSlice = createSlice({
       state.isLoading = true;
     },
     [__addPosts.fulfilled]: (state, action) => {
-      state.posts = action.payload;
       state.isLoading = false;
+      state.posts = action.payload;
     },
     [__addPosts.rejected]: (state, action) => {
-      state.error = action.payload;
       state.isLoading = false;
+      state.error = true;
     },
     //delete
     [__deletePosts.pending]: (state) => {
