@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.REACT_APP_FRONT_BASE_URL,
   timeout: 2500,
   header: {
     "Authorization" : localStorage.getItem("token")
