@@ -19,7 +19,6 @@ const PostUpdate = () => {
   console.log(params);
 
   // 원본 텍스트 내용
-  useEffect(() => {});
 
   //수정된 내용 담기
   const contentChangeHandler = (e) => {
