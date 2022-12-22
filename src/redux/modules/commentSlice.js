@@ -57,7 +57,7 @@ export const __updateComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     // try {
     console.log(payload);
-    const {data} = await instance.get("/posts");
+    // const {data} = await instance.patch(`/api/comments/${}`);
     // } catch (error) {
     //   return thunkAPI.rejectWithValue(error);
     // }
@@ -86,7 +86,7 @@ export const __deleteComments = createAsyncThunk(
   }
 );
 
-export const commentsSlice = createSlice({
+const commentsSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {
@@ -113,7 +113,7 @@ export const commentsSlice = createSlice({
     },
     [__addComment.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.comments = [...payload.data];
+      state.comments = [...payload];
       console.log("fulfilled ", state.comments);
     },
     [__addComment.rejected]: (state, action) => {

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import PostDetail from '../../pages/PostDetail';
 import Card from '../../elements/Card';
 
-const PostContainer = ({post}) => {
-
+const PostContainer  = ({post}) => {
+  console.log(post);
   return (
     <PostDetailContainer>
       <Card post={post}/>
-      <Content>{post.text}</Content>
+      <Content>{post.text}</Content> 
     </PostDetailContainer>
   );
 };

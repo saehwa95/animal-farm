@@ -7,8 +7,7 @@ import MdPrimaryBtn from "../elements/MdPrimaryBtn";
 import MdSecondaryBtn from "../elements/MdSecondaryBtn";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  __addPosts,
-  __getDetailPost,
+  __getUpdatePost,
   __UpdatePosts,
 } from "../redux/modules/postsSlice";
 
@@ -19,14 +18,20 @@ const PostUpdate = () => {
   const [image, setImage] = useState([]);
   const [img, setImg] = useState([]);
   const [retext, setRetext] = useState("");
+
   const { posts } = useSelector((state) => state.postsSlice);
+
   const postId = useParams(posts.postId);
+  console.log(postId);
+
   const { text } = posts[0] ?? {
     text: "",
   };
+  
+  console.log(text);
 
   useEffect(() => {
-    dispatch(__getDetailPost({ postId: postId }));
+    dispatch(__getUpdatePost({ postId: postId })).then(res => console.log(res));
   }, []);
 
   useEffect(() => {
