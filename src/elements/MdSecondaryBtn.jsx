@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 const MdSecondaryBtn = ({
-  onClick,
+  
   bgColor,
   color,
   radius,
@@ -10,6 +10,7 @@ const MdSecondaryBtn = ({
   padding,
   border,
   width,
+  onClick,
 }) => {
   const styles = {
     bgColor,

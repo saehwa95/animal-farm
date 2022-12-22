@@ -19,6 +19,7 @@ const Home = () => {
     dispatch(__getPosts());
   }, []);
 
+  console.log(posts[0].text);
   return (
     <Wrapper>
       <MdPrimaryBtn
@@ -28,15 +29,11 @@ const Home = () => {
       >
         반려동물 자랑하기
       </MdPrimaryBtn>
-      <MdPrimaryBtn
-      onClick={() => dispatch(__deletePosts(61))}
-      >데이터 삭제</MdPrimaryBtn>
       <InnerBox flexWrap="wrap" gap="40px">
         {posts?.map((post, index) => {
           return <Card key={index} post={post} style={{ margin: "40px" }}></Card>
         })}
       </InnerBox>
-      
     </Wrapper>
   );
 };
