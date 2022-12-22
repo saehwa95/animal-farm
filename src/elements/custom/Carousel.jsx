@@ -1,4 +1,3 @@
-import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 import React, {useRef, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { NavLink } from "react-router-dom";
@@ -8,9 +7,11 @@ const Carousel = ({postId, images}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
-  const totalSlide = images.length-1;
+  console.log(postId);
+  console.log(images);
+  console.log(Array.isArray(images));
 
-  // console.log(images);
+  const totalSlide = images?.length-1;
 
   const nextSlide = () => {
     if (currentSlide >= totalSlide) { // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화합니다.
@@ -41,9 +42,9 @@ const Carousel = ({postId, images}) => {
               return <Slide key={index} src={image}/>
             })}
           </SliderContainer>
-          </NavLink>
+        </NavLink>
       </Container>
-    
+
       <Button onClick={prevSlide}>＜</Button>
       <Button onClick={nextSlide}>＞</Button>
     </>

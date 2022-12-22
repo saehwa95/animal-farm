@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Comment from './Comment';
 import MdPrimaryBtn from '../../elements/MdPrimaryBtn';
 import InnerBox from '../../elements/InnerBox'
+import {__addComment, __getComments} from "../../redux/modules/commentSlice"
 
-const CommentContainer = () => {
+const CommentContainer = ({postId}) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-
-  const commentInputHandelr= (e)=> {
+  
+  const commentInputHandler= (e)=> {
     console.log(e.target.value);
     setComment(e.target.value);
   }
 
+  // useEffect(()=> {
+  //   dispatch(__getComments({postId}));
+  // },[dispatch])
+
+  // console.log(comments);
+  
   const addCommentHandler = () => {
-    // dispatch(__addComment());
+    // console.log(comment, postId);
+    dispatch(__addComment({comment, postId}));
   }
+
+  console.log("commentconatinetr",postId);
   return (
     <>
       <InnerBox justifyContent="space-between"  width="100%" margin="50px 0 0" padding="40px 0" borderTop="solid">
         <CommentBox
-          onChange={commentInputHandelr}
+          value={comment}
+          onChange={commentInputHandler}
         />
-
-        <MdPrimaryBtn onclick={addCommentHandler}>등록</MdPrimaryBtn>
+        <MdPrimaryBtn onClick={addCommentHandler}>등록</MdPrimaryBtn>
       </InnerBox>
       <InnerBox justifyContent="space-between" width="100%">
         {/* comment?.map(comment) => { return <Comment ...props />} */}
-        <Comment></Comment>
+        <Comment postId={postId}></Comment>
       </InnerBox>
     </>
   );

@@ -2,6 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import jwt from "jwt-decode";
 
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_FRONT_BASE_URL,
+  headers: {
+    authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+  timeout: 10000,
+});
+
 //initialstate 작성
 const initialState = {
   nickname: "",
@@ -19,7 +27,7 @@ export const __postRegister = createAsyncThunk(
   "user/postRegister",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post("http://43.201.27.229/api/signup", payload);
+      const res = await instance.post("api/signup", payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       window.alert("회원가입에 실패했습니다.");
@@ -33,8 +41,8 @@ export const __postDupEmail = createAsyncThunk(
   "user/dupEmail",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post(
-        "http://43.201.27.229/api/signup/checkId/",
+      const res = await instance.post(
+        "api/signup/checkId/",
         payload
       );
       window.alert("사용 가능한 ID입니다.");
@@ -51,8 +59,9 @@ export const __postLogin = createAsyncThunk(
   "user/postLogin",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post("http://43.201.27.229/api/login", payload);
+      const res = await instance.post("/api/login", payload);
       localStorage.setItem("token", res.data.token);
+      console.log("토큰 저장");
       return thunkAPI.fulfillWithValue(res.data.token);
     } catch (error) {
       window.alert("가입하신 이메일, 비밀번호와 다릅니다!!");

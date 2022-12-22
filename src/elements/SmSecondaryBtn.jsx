@@ -11,7 +11,6 @@ const SmSecondaryBtn = ({
   height,
   padding,
   border,
-  type,
 }) => {
   const styles = {
     bgColor,

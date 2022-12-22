@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PostDetail from '../../pages/PostDetail';
-import TextBox from '../../elements/TextBox';
-import Carousel from '../../elements/carousel/Carousel'
+import Card from '../../elements/Card';
 
-const PostContainer = () => {
+const PostContainer  = ({post}) => {
+  console.log(post);
   return (
     <PostDetailContainer>
-      <Carousel/>
-        <TextBox width="590px" height="568px"/>
+      <Card post={post}/>
+      <Content>{post.text}</Content> 
     </PostDetailContainer>
   );
 };
@@ -19,6 +19,15 @@ const PostDetailContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 20px;
+`;
+
+const Content = styled.div`
+  width: 590px;
+  height: 568px;
+  background-color: #fff;
+
+  color: #000;
+  padding: 16px;
 `;
 
 export default PostContainer;
