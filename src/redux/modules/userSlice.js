@@ -7,7 +7,7 @@ const instance = axios.create({
   headers: {
     authorization: `Bearer ${localStorage.getItem("token")}`,
   },
-  timeout: 5000,
+  timeout: 10000,
 });
 
 //initialstate 작성
@@ -61,6 +61,7 @@ export const __postLogin = createAsyncThunk(
     try {
       const res = await instance.post("/api/login", payload);
       localStorage.setItem("token", res.data.token);
+      console.log("토큰 저장");
       return thunkAPI.fulfillWithValue(res.data.token);
     } catch (error) {
       window.alert("가입하신 이메일, 비밀번호와 다릅니다!!");
