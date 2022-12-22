@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import Carousel from './custom/Carousel';
 
 const Card = ({post}) => {
-  console.log(post);
+  // console.log(post.imageUrl);
+
   return (
     <CardWrap>
-      <Carousel postId={post.postId} images={post.imagesUrl}></Carousel>
+      <Carousel postId={post.postId} images={post.imageUrl}></Carousel>
     </CardWrap>
   );
 };
