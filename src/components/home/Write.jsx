@@ -72,10 +72,8 @@ const Write = () => {
               type="file"
               multiple
               accept="image/*"
-              id="fileUpload"
               name="images"
               style={{ display: "none" }}
-              required
             />
           </ImgButton>
           <TextBox
@@ -85,9 +83,8 @@ const Write = () => {
             type="text"
             name="text"
             value={input.text}
-            required
           ></TextBox>
-          <div style={{ margin: "20px", justifyContent: "center" }}>
+          <div style={{ margin: "20px" }}>
             <MdPrimaryBtn onClick={onSubmitHandler}>등록하기</MdPrimaryBtn>
           </div>
         </Stform>
