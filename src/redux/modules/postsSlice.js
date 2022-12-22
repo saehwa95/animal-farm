@@ -36,12 +36,11 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
-
 export const __getDetailPost = createAsyncThunk(
   "postsSlice/getDetailPost",
   async (payload, thunkAPI) => {
     try {
-      const {data} = await instance.get(`/api/posts/${payload.postId}`);
+      const { data } = await instance.get(`/api/posts/${payload.postId}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -54,12 +53,14 @@ export const __deletePosts = createAsyncThunk(
   "DELETE_POSTS",
   async (payload, thunkAPI) => {
     try {
-
       const response = await instance.delete(`/api/posts/${payload.postId}`);
+      window.alert(response.data.message);
+      window.location.replace("/home");
       console.log(response.data.message);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -73,7 +74,7 @@ export const __addPosts = createAsyncThunk(
       console.log(payload);
       const response = await instance.post("/api/posts", payload);
       window.alert(response.data.message);
-      window.location.replace("/Home");
+      window.location.replace("/home");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log(error);
@@ -88,15 +89,19 @@ export const __UpdatePosts = createAsyncThunk(
   "UPDATE_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const updatedata = await axios.patch();
-      return updatedata.data;
+      const response = await instance.put(
+        `/api/posts/${payload.postId.id}`,
+        payload.formData
+      );
+      window.alert(response.data.message);
+      return thunkAPI.fulfillWithValue(updatedata.data);
     } catch (error) {
       console.log(error);
+      window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 //리듀서
 export const postsSlice = createSlice({
   name: "posts",
