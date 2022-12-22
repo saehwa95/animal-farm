@@ -12,6 +12,7 @@ const TextBox = ({
   onChange,
   onKeyUp,
   onKeyPress,
+  value,
 }) => {
   const styles = {
     bgColor,
@@ -23,6 +24,7 @@ const TextBox = ({
     onChange,
     onKeyUp,
     onKeyPress,
+    value,
   };
   return (
     <StInputBox
@@ -43,6 +45,7 @@ TextBox.defaultProps = {
   onChange: (e) => {},
   onKeyUp: (e) => {},
   onKeyPress: (e) => {},
+  value: "",
 };
 
 const StInputBox = styled.textarea`
@@ -57,6 +60,7 @@ const StInputBox = styled.textarea`
   border-radius: 5px;
   outline: none;
   resize: none;
+  value: ${({ value }) => value};
 `;
 
 export default TextBox;
