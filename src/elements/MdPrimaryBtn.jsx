@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 const MdPrimaryBtn = ({
-  onClick,
   bgColor,
   color,
   radius,
@@ -10,6 +9,8 @@ const MdPrimaryBtn = ({
   padding,
   border,
   width,
+  onClick,
+  type
 }) => {
   const styles = {
     bgColor,
@@ -20,6 +21,7 @@ const MdPrimaryBtn = ({
     padding,
     border,
     width,
+    type
   };
   return (
     <StMdSeconBtn {...styles} onClick={onClick}>
@@ -45,6 +47,7 @@ const StMdSeconBtn = styled.button`
   padding: ${({ padding }) => padding};
   height: ${({ height }) => height};
   border: ${({ border }) => border};
+  type :${({ type }) => type};
   cursor: pointer;
 `;
 export default MdPrimaryBtn;
